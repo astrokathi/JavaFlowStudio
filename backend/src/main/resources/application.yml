@@ -1,0 +1,24 @@
+server:
+  port: 8080
+
+spring:
+  data:
+    mongodb:
+      uri: mongodb://localhost:27017/javaflow
+      database: javaflow
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+  jackson:
+    serialization:
+      WRITE_DATES_AS_TIMESTAMPS: false
+
+# MongoDB reactive repositories
+spring.data.mongodb.repositories.type: reactive
+
+# Logging
+logging:
+  level:
+    root: INFO
+    org.springframework: INFO
+    com.example.javaflow: DEBUG
