@@ -1,45 +1,30 @@
 version: '3.8'
-
 services:
-  # Backend Service
   backend:
-    build:
-      context: ./backend
-      dockerfile: Dockerfile
+    build: ./backend
     ports:
       - "8080:8080"
     environment:
-      - SPRING_PROFILES_ACTIVE=dev
-      - MONGODB_URI=mongodb://mongo:27017/javaflow
-      - DATABASE_NAME=javaflow
-    volumes:
-      - ./backend:/app
-      - ~/.m2:/root/.m2
+      - SPRING_DATA_MONGODB_URI=mongodb://mongo:27017/javaflow
+      - SPRING_DATA_MONGODB_DATABASE=javaflow
     depends_on:
       - mongo
     networks:
-      - javaflow-network
+      - javaflow-net
 
-  # Frontend Service
   frontend:
-    build:
-      context: ./frontend
-      dockerfile: Dockerfile
+    build: ./frontend
     ports:
       - "3000:3000"
     environment:
       - REACT_APP_API_URL=http://localhost:8080/api
-    volumes:
-      - ./frontend:/app
-      - /app/node_modules
     depends_on:
       - backend
     networks:
-      - javaflow-network
+      - javaflow-net
 
-  # MongoDB Database
   mongo:
-    image: mongo:5.0
+    image: mongo:7
     ports:
       - "27017:27017"
     volumes:
@@ -47,11 +32,11 @@ services:
     environment:
       - MONGO_INITDB_DATABASE=javaflow
     networks:
-      - javaflow-network
+      - javaflow-net
 
 volumes:
   mongo-data:
 
 networks:
-  javaflow-network:
+  javaflow-net:
     driver: bridge

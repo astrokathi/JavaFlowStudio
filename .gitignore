@@ -91,3 +91,8 @@ docker-compose.override.yml
 
 # Environment
 .env
+
+# Playwright
+playwright-report/
+zipkin-*/
+node_modules/
