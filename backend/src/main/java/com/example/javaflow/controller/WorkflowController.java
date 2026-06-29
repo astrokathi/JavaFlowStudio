@@ -1,10 +1,9 @@
 package com.example.javaflow.controller;
 
-import com.example.javaflow.dto.WorkflowDto;
 import com.example.javaflow.dto.WorkflowCreateDto;
+import com.example.javaflow.dto.WorkflowDto;
 import com.example.javaflow.dto.WorkflowUpdateDto;
 import com.example.javaflow.service.WorkflowService;
-import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
@@ -12,10 +11,13 @@ import reactor.core.publisher.Mono;
 
 @RestController
 @RequestMapping("/api/workflows")
-@RequiredArgsConstructor
 public class WorkflowController {
 
     private final WorkflowService workflowService;
+
+    public WorkflowController(WorkflowService workflowService) {
+        this.workflowService = workflowService;
+    }
 
     @GetMapping
     public Flux<WorkflowDto> getAllWorkflows() {
@@ -44,9 +46,11 @@ public class WorkflowController {
 
     @DeleteMapping("/{id}")
     public Mono<ResponseEntity<Void>> deleteWorkflow(@PathVariable String id) {
-        return workflowService.deleteById(id)
-                .map(v -> ResponseEntity.ok().<Void>build())
-                .defaultIfEmpty(ResponseEntity.notFound().build());
+        return workflowService.findById(id)
+                .flatMap(existingWorkflow ->
+                        workflowService.deleteById(id).then(Mono.just(ResponseEntity.ok().<Void>build()))
+                )
+                .switchIfEmpty(Mono.just(ResponseEntity.notFound().<Void>build()));
     }
 
     @GetMapping("/active")

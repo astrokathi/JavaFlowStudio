@@ -2,7 +2,6 @@ package com.example.javaflow.controller;
 
 import com.example.javaflow.dto.ExecutionLogDto;
 import com.example.javaflow.service.ExecutionLogService;
-import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
@@ -10,10 +9,13 @@ import reactor.core.publisher.Mono;
 
 @RestController
 @RequestMapping("/api/execution-logs")
-@RequiredArgsConstructor
 public class ExecutionLogController {
 
     private final ExecutionLogService executionLogService;
+
+    public ExecutionLogController(ExecutionLogService executionLogService) {
+        this.executionLogService = executionLogService;
+    }
 
     @GetMapping
     public Flux<ExecutionLogDto> getAllExecutionLogs() {
@@ -32,13 +34,11 @@ public class ExecutionLogController {
         return executionLogService.findByWorkflowId(workflowId);
     }
 
-    @GetMapping("/execution/{executionId}")
-    public Flux<ExecutionLogDto> getExecutionLogsByExecutionId(@PathVariable String executionId) {
-        return executionLogService.findByExecutionId(executionId);
-    }
-
-    @GetMapping("/workflow/{workflowId}/execution/{executionId}")
-    public Flux<ExecutionLogDto> getExecutionLogsByWorkflowAndExecution(@PathVariable String workflowId, @PathVariable String executionId) {
-        return executionLogService.findByWorkflowIdAndExecutionId(workflowId, executionId);
+    @DeleteMapping("/{id}")
+    public Mono<ResponseEntity<Void>> deleteExecutionLog(@PathVariable String id) {
+        return executionLogService.findById(id)
+                .flatMap(existingExecutionLog ->
+                        executionLogService.deleteById(id).then(Mono.just(ResponseEntity.ok().<Void>build())))
+                .switchIfEmpty(Mono.just(ResponseEntity.notFound().<Void>build()));
     }
 }

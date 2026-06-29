@@ -5,16 +5,18 @@ import com.example.javaflow.dto.NodeTypeCreateDto;
 import com.example.javaflow.dto.NodeTypeUpdateDto;
 import com.example.javaflow.model.NodeType;
 import com.example.javaflow.repository.NodeTypeRepository;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 @Service
-@RequiredArgsConstructor
 public class NodeTypeService {
 
     private final NodeTypeRepository nodeTypeRepository;
+
+    public NodeTypeService(NodeTypeRepository nodeTypeRepository) {
+        this.nodeTypeRepository = nodeTypeRepository;
+    }
 
     public Flux<NodeTypeDto> findAll() {
         return nodeTypeRepository.findAll()
@@ -52,7 +54,7 @@ public class NodeTypeService {
     }
 
     public Mono<NodeTypeDto> findByName(String name) {
-        return nodeTypeRepository.findByName(name)
+        return nodeTypeRepository.findFirstByName(name)
                 .map(this::toDto);
     }
 

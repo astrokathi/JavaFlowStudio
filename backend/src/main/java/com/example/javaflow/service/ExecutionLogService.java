@@ -3,16 +3,18 @@ package com.example.javaflow.service;
 import com.example.javaflow.dto.ExecutionLogDto;
 import com.example.javaflow.model.ExecutionLog;
 import com.example.javaflow.repository.ExecutionLogRepository;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 @Service
-@RequiredArgsConstructor
 public class ExecutionLogService {
 
     private final ExecutionLogRepository executionLogRepository;
+
+    public ExecutionLogService(ExecutionLogRepository executionLogRepository) {
+        this.executionLogRepository = executionLogRepository;
+    }
 
     public Flux<ExecutionLogDto> findAll() {
         return executionLogRepository.findAll()
@@ -42,6 +44,10 @@ public class ExecutionLogService {
     public Flux<ExecutionLogDto> findByWorkflowIdAndExecutionId(String workflowId, String executionId) {
         return executionLogRepository.findByWorkflowIdAndExecutionId(workflowId, executionId)
                 .map(this::toDto);
+    }
+
+    public Mono<Void> deleteById(String id) {
+        return executionLogRepository.deleteById(id);
     }
 
     private ExecutionLogDto toDto(ExecutionLog executionLog) {

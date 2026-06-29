@@ -9,8 +9,6 @@ public class WorkflowCreateDto {
     private List<EdgeDto> edges;
 
     // Getters and Setters
-    public String getName() {}
-
     public String getName() { return name; }
     public void setName(String name) { this.name = name; }
     public String getDescription() { return description; }

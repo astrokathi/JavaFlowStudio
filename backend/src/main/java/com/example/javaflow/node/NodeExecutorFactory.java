@@ -15,36 +15,30 @@ public class NodeExecutorFactory {
 
     private final HttpRequestNodeExecutor httpRequestNodeExecutor;
     private final MongoDbNodeExecutor mongoDbNodeExecutor;
-    private final TransformNodeExecutor transformNodeExecutor;
     private final SplitNodeExecutor splitNodeExecutor;
     private final MergeNodeExecutor mergeNodeExecutor;
     private final DelayNodeExecutor delayNodeExecutor;
     private final FilterNodeExecutor filterNodeExecutor;
     private final EmailNodeExecutor emailNodeExecutor;
     private final WebhookNodeExecutor webhookNodeExecutor;
-    private final CustomScriptNodeExecutor customScriptNodeExecutor;
 
     @Autowired
     public NodeExecutorFactory(HttpRequestNodeExecutor httpRequestNodeExecutor,
                                MongoDbNodeExecutor mongoDbNodeExecutor,
-                               TransformNodeExecutor transformNodeExecutor,
                                SplitNodeExecutor splitNodeExecutor,
                                MergeNodeExecutor mergeNodeExecutor,
                                DelayNodeExecutor delayNodeExecutor,
                                FilterNodeExecutor filterNodeExecutor,
                                EmailNodeExecutor emailNodeExecutor,
-                               WebhookNodeExecutor webhookNodeExecutor,
-                               CustomScriptNodeExecutor customScriptNodeExecutor) {
+                               WebhookNodeExecutor webhookNodeExecutor) {
         this.httpRequestNodeExecutor = httpRequestNodeExecutor;
         this.mongoDbNodeExecutor = mongoDbNodeExecutor;
-        this.transformNodeExecutor = transformNodeExecutor;
         this.splitNodeExecutor = splitNodeExecutor;
         this.mergeNodeExecutor = mergeNodeExecutor;
         this.delayNodeExecutor = delayNodeExecutor;
         this.filterNodeExecutor = filterNodeExecutor;
         this.emailNodeExecutor = emailNodeExecutor;
         this.webhookNodeExecutor = webhookNodeExecutor;
-        this.customScriptNodeExecutor = customScriptNodeExecutor;
     }
 
     /**
@@ -54,16 +48,12 @@ public class NodeExecutorFactory {
      * @return The NodeExecutor instance
      * @throws IllegalArgumentException if the node type is not supported
      */
-    public NodeExecutor getExecutor(String nodeType is not supported
-     */
     public NodeExecutor getExecutor(String nodeType) {
         switch (nodeType.toLowerCase()) {
             case "http-request":
                 return httpRequestNodeExecutor;
             case "mongodb":
                 return mongoDbNodeExecutor;
-            case "transform":
-                return transformNodeExecutor;
             case "split":
                 return splitNodeExecutor;
             case "merge":
@@ -76,8 +66,6 @@ public class NodeExecutorFactory {
                 return emailNodeExecutor;
             case "webhook":
                 return webhookNodeExecutor;
-            case "custom-script":
-                return customScriptNodeExecutor;
             default:
                 throw new IllegalArgumentException("Unsupported node type: " + nodeType);
         }

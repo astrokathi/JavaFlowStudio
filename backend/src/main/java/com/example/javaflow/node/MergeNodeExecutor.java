@@ -2,9 +2,8 @@ package com.example.javaflow.node;
 
 import com.example.javaflow.model.Node;
 import com.example.javaflow.model.ExecutionLog;
-import reactor.core.publisher.Mono;
 import java.util.Map;
-import java.util.List;
+import java.util.HashMap;
 
 /**
  * Executor for merge nodes (waits for all incoming branches and combines them).
@@ -15,7 +14,7 @@ import java.util.List;
 public class MergeNodeExecutor implements NodeExecutor {
 
     @Override
-    public Mono<Map<String, Object>> execute(Node node, Map<String, Object> input, ExecutionLog executionLog) {
+    public Object execute(Node node, Map<String, Object> input, ExecutionLog executionLog) {
         Map<String, Object> config = node.getConfig();
         String mergeMode = (String) config.getOrDefault("mode", "concat"); // concat, merge, etc.
         String outputField = (String) config.getOrDefault("outputField", "merged");
@@ -29,6 +28,6 @@ public class MergeNodeExecutor implements NodeExecutor {
         output.put("mergeMode", mergeMode);
 
         executionLog.setStatus("SUCCESS");
-        return Mono.just(output);
+        return output;
     }
 }

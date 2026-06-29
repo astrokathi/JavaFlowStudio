@@ -4,7 +4,6 @@ import com.example.javaflow.dto.NodeTypeDto;
 import com.example.javaflow.dto.NodeTypeCreateDto;
 import com.example.javaflow.dto.NodeTypeUpdateDto;
 import com.example.javaflow.service.NodeTypeService;
-import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
@@ -12,10 +11,13 @@ import reactor.core.publisher.Mono;
 
 @RestController
 @RequestMapping("/api/node-types")
-@RequiredArgsConstructor
 public class NodeTypeController {
 
     private final NodeTypeService nodeTypeService;
+
+    public NodeTypeController(NodeTypeService nodeTypeService) {
+        this.nodeTypeService = nodeTypeService;
+    }
 
     @GetMapping
     public Flux<NodeTypeDto> getAllNodeTypes() {
@@ -51,8 +53,9 @@ public class NodeTypeController {
 
     @DeleteMapping("/{id}")
     public Mono<ResponseEntity<Void>> deleteNodeType(@PathVariable String id) {
-        return nodeTypeService.deleteById(id)
-                .map(v -> ResponseEntity.ok().<Void>build())
-                .defaultIfEmpty(ResponseEntity.notFound().build());
+        return nodeTypeService.findById(id)
+                .flatMap(existingNodeType ->
+                        nodeTypeService.deleteById(id).then(Mono.just(ResponseEntity.ok().<Void>build())))
+                .switchIfEmpty(Mono.just(ResponseEntity.notFound().<Void>build()));
     }
 }

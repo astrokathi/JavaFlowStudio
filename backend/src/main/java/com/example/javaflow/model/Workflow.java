@@ -35,7 +35,7 @@ public class Workflow {
     public void setEdges(List<Edge> edges) { this.edges = edges; }
     public boolean isActive() { return active; }
     public void setActive(boolean active) { this.active = active; }
-    public LocalDateTime getCreatedAt() { return createdAt) { return createdAt; }
+    public LocalDateTime getCreatedAt() { return createdAt; }
     public void setCreatedAt(LocalDateTime createdAt) { this.createdAt = createdAt; }
     public LocalDateTime getUpdatedAt() { return updatedAt; }
     public void setUpdatedAt(LocalDateTime updatedAt) { this.updatedAt = updatedAt; }
