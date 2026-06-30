@@ -1,68 +1,47 @@
-# Prerequisites
+# 🛠️ Installation Prerequisites
 
-## Software Requirements
+Before launching JavaFlow Visual Studio, ensure that your local machine meets the following environment specifications:
 
-### Backend (Java/Spring Boot)
-- **Java Development Kit (JDK)**: Version 17 or higher
-  - Download: https://adoptium.net/
-  - Verify installation: `java -version`
-- **Apache Maven**: Version 3.8 or higher
-  - Download: https://maven.apache.org/download.cgi
-  - Verify installation: `mvn -v`
+---
 
-### Frontend (React)
-- **Node.js**: Version 18 or higher (LTS recommended)
-  - Download: https://nodejs.org/
-  - Verify installation: `node --version` and `npm --version`
-- **Git**: Version 2.0 or higher
-  - Download: https://git-scm.com/
-  - Verify installation: `git --version`
+## 💻 System Software Requirements
 
-### Development Tools
-- **IDE**: IntelliJ IDEA Ultimate/Community Edition, VS Code, or Eclipse
-- **API Client**: Postman or curl for testing endpoints
-- **Database Client**: MongoDB Compass (if using MongoDB)
-- **Container Runtime**: Docker Desktop (for containerized deployment)
-  - Docker version: 20.10 or higher
-  - Docker Compose version: 2.0 or higher
+### 1. Docker & Container Runtime
+Since JavaFlow compiles Java code and runs dependency synchronization in the background, Docker is the recommended runtime environment.
+- **Docker Engine**: Version 24.0.0 or higher.
+- **Docker Compose**: Version 2.20.0 or higher.
+- **Docker Desktop Permissions**:
+  > [!IMPORTANT]
+  > Ensure that file sharing is enabled in your Docker Desktop settings (Preferences -> Resources -> File Sharing) for your home directory (e.g. `/Users/kathi.s`), as the exporter mounts host folders to compile Java source files and cache Maven dependencies.
 
-### Optional but Recommended
-- **Linux Subsystem**: WSL2 (Windows) or native Linux for better Docker performance
-- **IDE Extensions**: 
-  - Java: Language Support for Java(TM) by Red Hat (VS Code)
-  - Spring: Spring Boot Extension Pack (VS Code)
-  - React: ES7+ React/Redux/React-Native snippets (VS Code)
-  - ESLint and Prettier for code formatting
+### 2. Native Toolchain (For Bare-Metal Runs)
+If you prefer running the frontend React server and Spring Boot API directly on your host machine without Docker:
+- **Java Development Kit (JDK)**: Version 17 or higher (Eclipse Temurin is recommended).
+- **Apache Maven**: Version 3.8.0 or higher.
+- **Node.js**: Version 18.0.0 or higher (LTS recommended) and **npm** 9.0.0+.
 
-## System Requirements
-- **Minimum**: 4GB RAM, 2 CPU cores, 10GB disk space
-- **Recommended**: 8GB RAM, 4 CPU cores, 20GB SSD storage
-- **Operating System**: Windows 10/11, macOS 12+, or Linux (Ubuntu 20.04+/CentOS 7+)
+---
 
-## Network Requirements
-- Internet access for dependency downloads
-- Port 8080 available for backend (configurable)
-- Port 3000 available for frontend (configurable)
-- Port 27017 available for MongoDB (if using local instance)
+## 🛜 Network & Port Mapping
 
-## Verification Steps
-After installing prerequisites, verify your setup:
+Ensure that the following local ports are unoccupied before launching:
+- **Port `3000`**: Exposes the React-based frontend Visual Studio application.
+- **Port `8080`**: Exposes the Spring WebFlux REST backend API.
+- **Port `27017`**: Exposes the MongoDB metadata server (used for persistence).
 
+---
+
+## 🔍 Verifying Installation
+
+Verify that your command-line tools are correctly configured by running:
 ```bash
-# Check Java
-java -version
+# Verify Docker is running and responsive
+docker ps
 
-# Check Maven
-mvn -v
+# Verify Java Compiler (if running locally)
+javac -version
 
-# Check Node.js and npm
+# Verify Node.js (if running locally)
 node --version
 npm --version
-
-# Check Git
-git --version
-
-# Check Docker (if installed)
-docker --version
-docker-compose --version
 ```

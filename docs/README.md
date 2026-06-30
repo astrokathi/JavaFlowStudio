@@ -1,134 +1,84 @@
-# JavaFlow
+# 🌀 JavaFlow Visual Studio
 
-![Java](https://img.shields.io/badge/java-%23ED8B00.svg?style=for-the-badge&logo=openjdk&logoColor=white)
-![Spring Boot](https://img.shields.io/badge/spring-boot-%236DB33F.svg?style=for-the-badge&logo=spring-boot&logoColor=white)
-![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB)
-![Node.js](https://img.shields.io/badge/node.js-%2343853D.svg?style=for-the-badge&logo=node.js&logoColor=white)
-![MongoDB](https://img.shields.io/badge/MongoDB-%234ea94b.svg?style=for-the-badge&logo=mongodb&logoColor=white)
-![Docker](https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white)
+A premium, agentic, non-blocking visual orchestrator designed to compose, compile, test, and package **Spring WebFlux Java Microservices** in real-time. Inspired by `n8n` and built on top of React Flow and Spring Boot, it bridges visual flow architectures directly to native Java structures.
 
-Workflow middleware system based on Spring WebFlux and React.
+---
 
-## 🚀 Quick Start
+## ⚡ Core Highlights
+
+- 🎨 **Visual Microservice Composition**: Drag, connect, and customize WebFlux controllers, handlers, facades, services, repositories, and entities.
+- 📦 **Dynamic Java Project Exporter**: Generates complete Java maven packages directly onto the host filesystem, complete with `pom.xml`, `application.yml`, and clean, ready-to-run code.
+- 🔄 **Host Maven Dependency Caching**: Integrates host volume mounts to sync and pre-download jar dependencies directly to `~/.m2` using containerized Maven offline tasks.
+- 🚀 **Live Integration Test Runner**: Connects to external APIs (using reactive `WebClient`) and runs full integration sequences in memory, outputting step-by-step console logs.
+- 📂 **Portability**: Import and export workflow configurations as standard JSON schema files.
+
+---
+
+## 📸 Seeded Ingestion Workflow: "Posts" CRUD Pipeline
+
+We have seeded a complete end-to-end GET `/api/posts/{id}` data ingestion workflow. Below is a detailed walkthrough of each architectural node layer and its parameters:
+
+### 1. Maven Project Configuration (`pom.xml`)
+Defines the Spring Boot starter parent and registers reactive dependencies (WebFlux, Lombok, MongoDB).
+![pom.xml Node Configuration](docs/images/pom_xml_node.png)
+
+### 2. Router Layer (`GetPostsById Route`)
+Specifies the HTTP path `/api/posts/{id}` and maps the GET operation to the `PostHandler`.
+![Route Node Configuration](docs/images/route_node.png)
+
+### 3. Handler Layer (`PostHandler`)
+Extracts the route path variables and passes the incoming payload down to the Facade component.
+![Handler Node Configuration](docs/images/handler_node.png)
+
+### 4. Facade Layer (`PostFacade`)
+Decouples request/response formatting from business logic by delegating variables to the service.
+![Facade Node Configuration](docs/images/facade_node.png)
+
+### 5. Service Layer (`PostService`)
+Executes the business logic, logs debug traces, triggers the HTTP client, and saves the entity to MongoDB.
+![Service Node Configuration](docs/images/service_node.png)
+
+### 6. WebClient Layer (`PostWebClient`)
+Executes a live non-blocking HTTP GET call to retrieve the requested post resource.
+![WebClient Node Configuration](docs/images/webclient_node.png)
+
+### 7. Entity Layer (`Post`)
+Defines the POJO structure with Lombok annotations (`@Data`, `@Builder`, `@NoArgsConstructor`, `@AllArgsConstructor`) and maps to the target MongoDB collection.
+![Entity Node Configuration](docs/images/entity_node.png)
+
+### 8. Repository Layer (`PostRepository`)
+Extends the Spring Data `ReactiveMongoRepository` interface to provide built-in CRUD operations.
+![Repository Node Configuration](docs/images/repository_node.png)
+
+### 9. Database Adapter (`Admin DB Adapter`)
+Holds the database credentials and coordinates connectivity to MongoDB.
+![DB Adapter Node Configuration](docs/images/db_adapter_node.png)
+
+---
+
+## 🏗️ Quick Start
 
 ### Prerequisites
-- Java 17+
-- Node.js 18+
 - Docker & Docker Compose
-- MongoDB (or use Docker Compose)
+- Java 17+ & Node.js 18+ (if running bare-metal)
 
-### Development Setup
-
-1. **Clone the repository**
-   ```bash
-   git clone <repository-url>
-   cd JavaFlow
-   ```
-
-2. **Install dependencies**
-   ```bash
-   # Backend
-   cd backend
-   mvn dependency:resolve
-   
-   # Frontend
-   cd ../frontend
-   npm install
-   ```
-
-3. **Start services**
-   ```bash
-   # Using Docker Compose (recommended for development)
-   cd ..
-   docker-compose up -d
-   
-   # Or manually:
-   # Terminal 1: Backend
-   cd backend
-   mvn spring-boot:run
-   
-   # Terminal 2: Frontend  
-   cd ../frontend
-   npm start
-   ```
-
-4. **Access the application**
-   - Frontend: http://localhost:3000
-   - Backend API: http://localhost:8080/api
-   - API Docs: http://localhost:8080/swagger-ui.html (when enabled)
-   - MongoDB Express: http://localhost:8081 (if using docker-compose)
-
-## 🧪 Testing
-
-### Backend Tests
+### Running with Docker (Recommended)
+Launch the complete stack (MongoDB, Backend Spring WebFlux, Frontend Visual Editor):
 ```bash
-cd backend
-mvn test
+docker-compose up --build
 ```
+Access the services at:
+- **Visual Studio Frontend**: [http://localhost:3000](http://localhost:3000)
+- **Backend API**: [http://localhost:8080/api](http://localhost:8080/api)
+- **Dynamic API Docs**: [http://localhost:8080/webjars/swagger-ui/index.html](http://localhost:8080/webjars/swagger-ui/index.html)
 
-### Frontend Tests
-```bash
-cd frontend
-npm test
-```
+---
 
-### End-to-End Tests (Playwright)
-```bash
-cd frontend
-npx playwright test
-```
+## 📖 Developer Documentation
+For details on standard configuration schemas, extending node types, and system architecture, check out the [Developer Documentation](docs/developer_docs.md).
 
-### Test Coverage
-- Backend: Unit & integration tests with JaCoCo
-- Frontend: Jest unit tests + Playwright E2E tests
+---
 
-## 📚 Documentation
-
-- [Setup Guide](SETUP.md) - Detailed installation and configuration
-- [Prerequisites](PREREQUISITES.md) - System requirements
-- [Architecture](ARCHITECTURE.md) - System design and components
-- [Tech Stack](TECH_STACK.md) - Technologies and versions used
-- [Context](context.md) - Project overview and goals
-- [Progress Tracking](progress.md) - Development status and tracking
-
-## 🐳 Docker Deployment
-
-```bash
-docker-compose up -d
-```
-
-Services will be available at:
-- Backend API: http://localhost:8080
-- Frontend: http://localhost:3000
-- MongoDB: mongodb://localhost:27017
-- MongoDB Express: http://localhost:8081
-
-## 🔧 Configuration
-
-Environment variables can be configured in:
-- Backend: `backend/src/main/resources/application.yml` and `.env`
-- Frontend: `.env` file in frontend directory
-
-## 📈 API Documentation
-
-When enabled, Swagger UI is available at:
-http://localhost:8080/swagger-ui.html
-
-## 🤝 Contributing
-
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add some amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
-
-## 📄 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## 🙏 Acknowledgments
-
-- Spring Boot team for the excellent framework
-- React team for the UI library
-- MongoDB for the document database
-- Playwright team for end-to-end testing tools
+## 🤝 Credits & Collaborations
+- **JSONPlaceholder**: Special thanks to [JSONPlaceholder](https://jsonplaceholder.typicode.com/) for supplying the mock REST API backend used to test the reactive HTTP WebClient integration pipeline.
+- **Antigravity 2.0**: Developed in collaboration with the Antigravity 2.0 AI pair programming agent by Google DeepMind.
