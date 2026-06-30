@@ -20,39 +20,39 @@ We have seeded a complete end-to-end GET `/api/posts/{id}` data ingestion workfl
 
 ### 1. Maven Project Configuration (`pom.xml`)
 Defines the Spring Boot starter parent and registers reactive dependencies (WebFlux, Lombok, MongoDB).
-![pom.xml Node Configuration](docs/images/pom_xml_node.png)
+![pom.xml Node Configuration](images/pom_xml_node.png)
 
 ### 2. Router Layer (`GetPostsById Route`)
 Specifies the HTTP path `/api/posts/{id}` and maps the GET operation to the `PostHandler`.
-![Route Node Configuration](docs/images/route_node.png)
+![Route Node Configuration](images/route_node.png)
 
 ### 3. Handler Layer (`PostHandler`)
 Extracts the route path variables and passes the incoming payload down to the Facade component.
-![Handler Node Configuration](docs/images/handler_node.png)
+![Handler Node Configuration](images/handler_node.png)
 
 ### 4. Facade Layer (`PostFacade`)
 Decouples request/response formatting from business logic by delegating variables to the service.
-![Facade Node Configuration](docs/images/facade_node.png)
+![Facade Node Configuration](images/facade_node.png)
 
 ### 5. Service Layer (`PostService`)
 Executes the business logic, logs debug traces, triggers the HTTP client, and saves the entity to MongoDB.
-![Service Node Configuration](docs/images/service_node.png)
+![Service Node Configuration](images/service_node.png)
 
 ### 6. WebClient Layer (`PostWebClient`)
 Executes a live non-blocking HTTP GET call to retrieve the requested post resource.
-![WebClient Node Configuration](docs/images/webclient_node.png)
+![WebClient Node Configuration](images/webclient_node.png)
 
 ### 7. Entity Layer (`Post`)
 Defines the POJO structure with Lombok annotations (`@Data`, `@Builder`, `@NoArgsConstructor`, `@AllArgsConstructor`) and maps to the target MongoDB collection.
-![Entity Node Configuration](docs/images/entity_node.png)
+![Entity Node Configuration](images/entity_node.png)
 
 ### 8. Repository Layer (`PostRepository`)
 Extends the Spring Data `ReactiveMongoRepository` interface to provide built-in CRUD operations.
-![Repository Node Configuration](docs/images/repository_node.png)
+![Repository Node Configuration](images/repository_node.png)
 
 ### 9. Database Adapter (`Admin DB Adapter`)
 Holds the database credentials and coordinates connectivity to MongoDB.
-![DB Adapter Node Configuration](docs/images/db_adapter_node.png)
+![DB Adapter Node Configuration](images/db_adapter_node.png)
 
 ---
 
