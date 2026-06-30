@@ -3,11 +3,13 @@ package com.example.javaflow.node;
 import com.example.javaflow.model.Node;
 import com.example.javaflow.model.ExecutionLog;
 import java.util.Map;
+import org.springframework.stereotype.Component;
 
 /**
  * Executor for email nodes (sends an email).
- * This is a placeholder implementation.
+ * This is a placeholder implementation that doesn't actually send an email.
  */
+@Component
 public class EmailNodeExecutor implements NodeExecutor {
 
     @Override

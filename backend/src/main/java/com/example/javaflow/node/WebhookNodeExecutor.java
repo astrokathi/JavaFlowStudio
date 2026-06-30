@@ -3,11 +3,13 @@ package com.example.javaflow.node;
 import com.example.javaflow.model.Node;
 import com.example.javaflow.model.ExecutionLog;
 import java.util.Map;
+import org.springframework.stereotype.Component;
 
 /**
  * Executor for webhook nodes (makes an HTTP call to a URL).
  * This is a placeholder implementation.
  */
+@Component
 public class WebhookNodeExecutor implements NodeExecutor {
 
     @Override

@@ -5,11 +5,13 @@ import com.example.javaflow.model.ExecutionLog;
 import java.util.Map;
 import java.util.List;
 import java.util.ArrayList;
+import org.springframework.stereotype.Component;
 
 /**
  * Executor for split nodes (splits input into multiple outputs).
  * This is a placeholder implementation that just wraps the input in a list.
  */
+@Component
 public class SplitNodeExecutor implements NodeExecutor {
 
     @Override

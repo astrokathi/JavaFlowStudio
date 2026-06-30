@@ -3,12 +3,14 @@ package com.example.javaflow.node;
 import com.example.javaflow.model.Node;
 import com.example.javaflow.model.ExecutionLog;
 import java.util.Map;
+import org.springframework.stereotype.Component;
 
 /**
  * Executor for filter nodes (passes through if condition is met).
  * This is a placeholder implementation that always passes through.
  * In a real implementation, this would evaluate a condition (e.g., using a simple expression language).
  */
+@Component
 public class FilterNodeExecutor implements NodeExecutor {
 
     @Override

@@ -3,11 +3,13 @@ package com.example.javaflow.node;
 import com.example.javaflow.model.Node;
 import com.example.javaflow.model.ExecutionLog;
 import java.util.Map;
+import org.springframework.stereotype.Component;
 
 /**
  * Executor for HTTP request nodes.
  * This is a placeholder implementation.
  */
+@Component
 public class HttpRequestNodeExecutor implements NodeExecutor {
 
     @Override

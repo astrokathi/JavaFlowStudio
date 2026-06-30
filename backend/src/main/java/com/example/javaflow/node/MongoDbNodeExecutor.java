@@ -6,6 +6,7 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
+import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
 import java.util.Map;
 import java.util.HashMap;
@@ -13,6 +14,7 @@ import java.util.HashMap;
 /**
  * Executor for MongoDB nodes.
  */
+@Component
 public class MongoDbNodeExecutor implements NodeExecutor {
 
     private final MongoTemplate mongoTemplate;

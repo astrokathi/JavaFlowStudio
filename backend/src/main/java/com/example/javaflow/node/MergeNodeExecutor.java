@@ -4,6 +4,7 @@ import com.example.javaflow.model.Node;
 import com.example.javaflow.model.ExecutionLog;
 import java.util.Map;
 import java.util.HashMap;
+import org.springframework.stereotype.Component;
 
 /**
  * Executor for merge nodes (waits for all incoming branches and combines them).
@@ -11,6 +12,7 @@ import java.util.HashMap;
  * from multiple branches. In a real workflow engine, the merging would be handled
  * by the engine based on the workflow topology.
  */
+@Component
 public class MergeNodeExecutor implements NodeExecutor {
 
     @Override
