@@ -9,6 +9,9 @@ services:
       - SPRING_DATA_MONGODB_DATABASE=javaflow
     depends_on:
       - mongo
+    volumes:
+      - /Users/kathi.s:/Users/kathi.s
+      - /Users/kathi.s/.m2:/root/.m2
     networks:
       - javaflow-net
 

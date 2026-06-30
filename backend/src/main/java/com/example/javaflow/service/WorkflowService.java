@@ -89,6 +89,7 @@ public class WorkflowService {
         position.setX(dto.getPosition().getX());
         position.setY(dto.getPosition().getY());
         node.setPosition(position);
+        node.setConfig(dto.getConfig());
         return node;
     }
 
@@ -102,6 +103,7 @@ public class WorkflowService {
         positionDto.setX(node.getPosition().getX());
         positionDto.setY(node.getPosition().getY());
         dto.setPosition(positionDto);
+        dto.setConfig(node.getConfig());
         return dto;
     }
 
